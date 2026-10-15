@@ -1,0 +1,34 @@
+{
+  "mcpServers": {
+    "mcp-atlassian": {
+      "type": "stdio",
+      "command": "powershell",
+      "args": [
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "${USERPROFILE}\\.agents\\mcp\\mcp-atlassian\\start-confluence-mcp.ps1"
+      ],
+      "env": {
+        "CONFLUENCE_PERSONAL_TOKEN": "${CONFLUENCE_PERSONAL_TOKEN}"
+      }
+    },
+    "yunxiao": {
+      "type": "stdio",
+      "command": "powershell",
+      "args": [
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "${USERPROFILE}\\.agents\\mcp\\yunxiao-mcp\\start-yunxiao-mcp.ps1"
+      ],
+      "env": {
+        "YUNXIAO_ACCESS_TOKEN": "${YUNXIAO_ACCESS_TOKEN}",
+        "YUNXIAO_API_BASE_URL": "${YUNXIAO_API_BASE_URL}",
+        "DEVOPS_TOOLSETS": "${DEVOPS_TOOLSETS}"
+      }
+    }
+  }
+}

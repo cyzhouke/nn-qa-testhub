@@ -1,0 +1,6 @@
+.env
+*.env
+secrets/
+.secrets/
+.claude/settings.local.json
+.obsidian/workspace.json

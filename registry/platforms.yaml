@@ -1,0 +1,138 @@
+platforms:
+  cli_install_policy:
+    scan_before_install: true
+    existing_cli_requires_user_confirmation: true
+    install_root: "%USERPROFILE%\\.agents"
+    npm_prefix: "%USERPROFILE%\\.agents\\npm-global"
+    binary_root: "%USERPROFILE%\\.agents\\cli"
+
+  wecom:
+    display_name: 企业微信
+    status: available
+    preferred_entry: agents_skill
+    cli:
+      command: wecom-cli
+      runtime_entry: "%USERPROFILE%\\.agents\\npm-global\\wecom-cli.cmd"
+      detected_path: C:\Users\leigod\.agents\npm-global\wecom-cli.cmd
+      previous_detected_path: C:\Users\leigod\AppData\Roaming\npm\wecom-cli.ps1
+      detected_version: wecom-cli 1.3.2
+      auth_status_checked: authorized
+      install: npm install --global --prefix "%USERPROFILE%\\.agents\\npm-global" @wecom/cli
+      install_scope: user_agents_npm_runtime
+      do_not_install_under: "%USERPROFILE%\\.codex"
+    skills:
+      primary: "%USERPROFILE%\\.agents\\skills\\wecom-unified\\SKILL.md"
+      detected_primary: C:\Users\leigod\.agents\skills\wecom-unified\SKILL.md
+      legacy_removed: true
+      do_not_use_legacy_split_skills: true
+
+  feishu:
+    display_name: 飞书/Lark
+    status: pending_install
+    preferred_entry: official_cli_or_mcp
+    cli:
+      command: lark-cli
+      detected_path: null
+      install: npm install --global --prefix "%USERPROFILE%\\.agents\\npm-global" @larksuite/cli
+      current_npm_version_checked: 1.0.96
+    mcp:
+      detected_server: null
+      note: Configure the official Feishu/Lark MCP endpoint or a local MCP wrapper after app credentials are issued.
+    required_env:
+      - FEISHU_APP_ID
+      - FEISHU_APP_SECRET
+
+  confluence:
+    display_name: Confluence
+    status: mcp_installed_rest_auth_verified
+    preferred_entry: mcp_atlassian_temp_pat
+    rest:
+      base_url: https://cf.nn.com
+      auth: personal_access_token
+      token_storage: never_persist
+      verified_read: true
+      role: mcp_backend_and_diagnostic_fallback
+      read_endpoint: /rest/api/content/{pageId}
+      expand:
+        - body.storage
+        - version
+        - space
+        - history
+    mcp:
+      server_name: mcp-atlassian
+      status: installed_primary
+      install_root: "%USERPROFILE%\\.agents\\mcp\\mcp-atlassian"
+      executable: "%USERPROFILE%\\.agents\\mcp\\mcp-atlassian\\.venv\\Scripts\\mcp-atlassian.exe"
+      startup_script: "%USERPROFILE%\\.agents\\mcp\\mcp-atlassian\\start-confluence-mcp.ps1"
+      detected_executable: C:\Users\leigod\.agents\mcp\mcp-atlassian\.venv\Scripts\mcp-atlassian.exe
+      detected_version: mcp-atlassian 0.23.1
+      docs: https://mcp-atlassian.soomiles.com/docs
+      transport_default: stdio
+      recommended_args:
+        - --read-only
+      codex_config: "%USERPROFILE%\\.codex\\config.toml"
+      claude_project_config: .mcp.json
+      recommended_env:
+        READ_ONLY_MODE: "true"
+        TOOLSETS: default
+      credential_source: user_environment_variable
+    required_env:
+      - CONFLUENCE_URL
+      - CONFLUENCE_PERSONAL_TOKEN
+
+  zentao:
+    display_name: 禅道
+    status: skill_installed_cli_pending
+    preferred_entry: zentao_cli_skill
+    skill:
+      name: zentao-cli
+      display_name: 禅道CLI
+      installed_path: "%USERPROFILE%\\.agents\\skills\\zentao-cli\\SKILL.md"
+      source_repository: https://github.com/easysoft/zentao-skills
+      source_skill_path: skills/zentao-cli
+      version: 0.3.1
+      validation: passed
+    cli:
+      command: zentao
+      detected_path: null
+      status: not_installed
+      install: npm install --global --prefix "%USERPROFILE%\\.agents\\npm-global" zentao-cli
+      runtime_entry: "%USERPROFILE%\\.agents\\npm-global\\zentao.cmd"
+      package_version_reference: 0.3.1
+    mcp:
+      detected_server: null
+      note: 当前未配置禅道 MCP；如部署版本支持且公司批准，可在后续接入。当前 Skill 只描述 zentao CLI 的使用方式。
+    required_env:
+      - ZENTAO_URL
+      - ZENTAO_ACCOUNT
+    auth_options:
+      - ZENTAO_TOKEN
+      - ZENTAO_PASSWORD
+
+  yunxiao:
+    display_name: 云效
+    status: mcp_installed_read_verified
+    preferred_entry: yunxiao_mcp
+    verified_at: "2026-09-22"
+    verified_scope:
+      - current_user
+      - current_organization
+      - test_repositories
+      - testcase_directories
+      - testcase_details
+    mcp:
+      server_name: yunxiao
+      package: alibabacloud-devops-mcp-server
+      version: 0.3.64
+      install_root: "%USERPROFILE%\\.agents\\mcp\\yunxiao-mcp"
+      executable: "%USERPROFILE%\\.agents\\mcp\\yunxiao-mcp\\node_modules\\alibabacloud-devops-mcp-server\\dist\\index.js"
+      startup_script: "%USERPROFILE%\\.agents\\mcp\\yunxiao-mcp\\start-yunxiao-mcp.ps1"
+      source_repository: https://github.com/aliyun/alibabacloud-devops-mcp-server
+      transport_default: stdio
+      official_hosted_endpoint: https://openapi-rdc.aliyuncs.com/ai/mcp
+      required_env:
+        - YUNXIAO_ACCESS_TOKEN
+      optional_env:
+        - YUNXIAO_API_BASE_URL
+        - DEVOPS_TOOLSETS
+      token_storage: never_persist

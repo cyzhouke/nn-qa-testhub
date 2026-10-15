@@ -1,0 +1,9 @@
+{
+  "theme": "obsidian",
+  "cssTheme": "Phycat",
+  "interfaceFontFamily": "霞鹜文楷,霞鹜臻楷 GB",
+  "textFontFamily": "霞鹜文楷,霞鹜臻楷 GB",
+  "monospaceFontFamily": "Cascadia Code",
+  "baseFontSizeAction": true,
+  "nativeMenus": false
+}
